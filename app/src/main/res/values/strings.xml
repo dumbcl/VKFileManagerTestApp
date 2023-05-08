@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">VKFileManagerTestApp</string>
+    <string name="greeting">The buttons below take you to the file manager, but first you need to accept the data access request</string>
+    <string name="permission">Allow permissions</string>
+    <string name="go">To file manager</string>
+    <string name="oops">Oops, looks like you didn\'t allow app\'s permissions</string>
+    <string name="return_to_main">Return to main</string>
+    <string name="no_files">No files?</string>
+</resources>
