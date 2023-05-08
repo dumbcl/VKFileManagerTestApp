@@ -45,5 +45,36 @@ class FileManagerActivity : AppCompatActivity() {
         }
     }
 
+    private fun sortBySizeDesc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortBySizeAsc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortByDateDesc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortByDateAsc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortByExtDesc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortByExtAsc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortByNameDesc(files: Array<File>): Array<File> {
+        return files
+    }
+
+    private fun sortByNameAsc(files: Array<File>): Array<File> {
+        return files
+    }
 
 }
