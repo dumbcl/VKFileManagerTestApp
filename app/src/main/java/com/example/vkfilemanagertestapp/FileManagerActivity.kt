@@ -34,47 +34,34 @@ class FileManagerActivity : AppCompatActivity() {
             oopsText.visibility = View.INVISIBLE
             returnToMainButton.visibility = View.INVISIBLE
             val root = File(path)
-            val files = root.listFiles()
+            var files = root.listFiles()
             if (files == null || files.isEmpty()) {
                 oopsText.visibility = View.VISIBLE
                 oopsText.setText(R.string.no_files)
             } else {
+                var sortType = intent.getStringExtra("sort_type")
+                if (sortType == null) {
+                    sortType = "byNameDesc"
+                }
+                files = sortFiles(sortType, files)
                 filesRecyclerView.layoutManager = LinearLayoutManager(this)
                 filesRecyclerView.adapter = Adapter(applicationContext, files)
             }
         }
     }
 
-    private fun sortBySizeDesc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortBySizeAsc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortByDateDesc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortByDateAsc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortByExtDesc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortByExtAsc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortByNameDesc(files: Array<File>): Array<File> {
-        return files
-    }
-
-    private fun sortByNameAsc(files: Array<File>): Array<File> {
-        return files
+    fun sortFiles(sortType: String, files: Array<File>): Array<File>{
+        return when (sortType) {
+            "bySizeAsc" -> sortBySizeAsc(files)
+            "bySizeDesc" -> sortBySizeDesc(files)
+            "byNameAsc" -> sortByNameAsc(files)
+            "byNameDesc" -> sortByNameDesc(files)
+            "byDateAsc" -> sortByDateAsc(files)
+            "byDateDesc" -> sortByDateDesc(files)
+            "byExtAsc" -> sortByExtAsc(files)
+            "byExtDesc" -> sortByExtDesc(files)
+            else -> sortByNameAsc(files)
+        }
     }
 
 }
