@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +22,8 @@ class FileManagerActivity : AppCompatActivity() {
         val filesRecyclerView = findViewById<RecyclerView>(R.id.files_recycler_view)
         val oopsText = findViewById<TextView>(R.id.oops_text)
         val returnToMainButton = findViewById<Button>(R.id.return_to_main_button)
+        val ascSortsButton = findViewById<ImageView>(R.id.ascSortsView)
+        val descSortsButton = findViewById<ImageView>(R.id.descSortsView)
 
         returnToMainButton.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -48,9 +52,17 @@ class FileManagerActivity : AppCompatActivity() {
                 filesRecyclerView.adapter = Adapter(applicationContext, files)
             }
         }
+
+        ascSortsButton.setOnClickListener {
+            openAscMenu(path!!, ascSortsButton)
+        }
+
+        descSortsButton.setOnClickListener {
+            openDescMenu(path!!, descSortsButton)
+        }
     }
 
-    fun sortFiles(sortType: String, files: Array<File>): Array<File>{
+    private fun sortFiles(sortType: String, files: Array<File>): Array<File>{
         return when (sortType) {
             "bySizeAsc" -> sortBySizeAsc(files)
             "bySizeDesc" -> sortBySizeDesc(files)
@@ -62,6 +74,96 @@ class FileManagerActivity : AppCompatActivity() {
             "byExtDesc" -> sortByExtDesc(files)
             else -> sortByNameAsc(files)
         }
+    }
+
+    private fun openAscMenu(path: String, it: ImageView){
+        val optionsMenu = PopupMenu(this, it)
+        optionsMenu.menu.add("Sort by size asc")
+        optionsMenu.menu.add("Sort by name asc")
+        optionsMenu.menu.add("Sort by date asc")
+        optionsMenu.menu.add("Sort by extension asc")
+
+        optionsMenu.setOnMenuItemClickListener { item ->
+            if (item.title == "Sort by size asc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "bySizeAsc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            if (item.title == "Sort by name asc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "byNameAsc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            if (item.title == "Sort by date asc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "byDateAsc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            if (item.title == "Sort by extension asc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "byExtAsc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            true
+        }
+        optionsMenu.show()
+    }
+
+    private fun openDescMenu(path: String, it: ImageView){
+        val optionsMenu = PopupMenu(this, it)
+        optionsMenu.menu.add("Sort by size desc")
+        optionsMenu.menu.add("Sort by name desc")
+        optionsMenu.menu.add("Sort by date desc")
+        optionsMenu.menu.add("Sort by extension desc")
+
+        optionsMenu.setOnMenuItemClickListener { item ->
+            if (item.title == "Sort by size desc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "bySizeDesc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            if (item.title == "Sort by name desc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "byNameDesc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            if (item.title == "Sort by date desc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "byDateDesc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            if (item.title == "Sort by extension desc") {
+                val intent = Intent(this, FileManagerActivity::class.java)
+                intent.putExtra("path", path)
+                intent.putExtra("sort_type", "byExtDesc")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            true
+        }
+        optionsMenu.show()
     }
 
 }

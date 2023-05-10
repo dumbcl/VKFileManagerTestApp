@@ -10,6 +10,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+
+        if (checkPermission()){
+            File(Environment.getExternalStorageDirectory().path).walkBottomUp().forEach {
+                val fileHash = getFileHash(it)
+            }
+        }
 
     }
 
