@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FileManagerActivity"></activity>
+        <activity android:name=".ChangedFilesActivity"></activity>
     </application>
 
 

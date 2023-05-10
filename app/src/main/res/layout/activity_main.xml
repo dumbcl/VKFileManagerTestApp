@@ -49,4 +49,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/permission_request_button" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/to_changed_files"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/request_button"
+        android:text="@string/to_changed"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/to_manager_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

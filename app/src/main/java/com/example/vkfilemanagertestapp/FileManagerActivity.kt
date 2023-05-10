@@ -24,6 +24,7 @@ class FileManagerActivity : AppCompatActivity() {
         val returnToMainButton = findViewById<Button>(R.id.return_to_main_button)
         val ascSortsButton = findViewById<ImageView>(R.id.ascSortsView)
         val descSortsButton = findViewById<ImageView>(R.id.descSortsView)
+        val listOptionsButton = findViewById<ImageView>(R.id.listOptionsView)
 
         returnToMainButton.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -53,6 +54,7 @@ class FileManagerActivity : AppCompatActivity() {
             }
         }
 
+
         ascSortsButton.setOnClickListener {
             openAscMenu(path!!, ascSortsButton)
         }
@@ -74,6 +76,7 @@ class FileManagerActivity : AppCompatActivity() {
             "byExtDesc" -> sortByExtDesc(files)
             else -> sortByNameAsc(files)
         }
+
     }
 
     private fun openAscMenu(path: String, it: ImageView){

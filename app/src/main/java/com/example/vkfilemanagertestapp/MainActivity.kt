@@ -13,12 +13,16 @@ import androidx.core.content.ContextCompat
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var dbHelper : DBHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val permissionRequestButton = findViewById<Button>(R.id.permission_request_button)
         val toFileManagerButton = findViewById<Button>(R.id.to_manager_button)
+        val toChangedFilesButton = findViewById<Button>(R.id.to_changed_files)
 
         permissionRequestButton.setOnClickListener(View.OnClickListener {
             if (checkPermission()) {
@@ -43,11 +47,16 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        if (checkPermission()){
-            File(Environment.getExternalStorageDirectory().path).walkBottomUp().forEach {
-                val fileHash = getFileHash(it)
+        toChangedFilesButton.setOnClickListener(View.OnClickListener {
+            if (checkPermission()) {
+                val intent = Intent(this, ChangedFilesActivity::class.java)
+                val changedFiles = startActivityGetChangedFiles()
+                intent.putExtra("changed_files", changedFiles)
+                startActivity(intent)
+            } else {
+                requestPermission()
             }
-        }
+        })
 
     }
 
@@ -66,4 +75,20 @@ class MainActivity : AppCompatActivity() {
             1
         )
     }
+
+    private fun startActivityGetChangedFiles(): String{
+        dbHelper = DBHelper(this)
+        var changedFiles = ""
+        if (checkPermission()){
+            File(Environment.getExternalStorageDirectory().path).walkTopDown().forEach {
+                if (it.isFile){
+                    val fileHash = getFileHash(it)
+                    saveFileHashToDb(dbHelper, it.path, fileHash)
+                }
+            }
+            changedFiles = getChangedFiles(dbHelper)
+        }
+        return changedFiles
+    }
+
 }
